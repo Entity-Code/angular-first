@@ -1,0 +1,29 @@
+<!-- stampa di una lista con l'ngFor-->
+<h2>I miei eroi</h2>
+<ul class="heroes">
+    <li *ngFor="let eroe of eroi" (click)="onSelect(eroe)" [class.selected]="eroe === eroeSelezionato">
+        <span class="badge">{{eroe.id}}</span>
+        {{eroe.nome}}
+    </li>
+</ul>
+
+<div *ngIf="eroeSelezionato">
+    <!-- utilizzo pipe uppercase -->
+    <h2>Dettagli di {{eroeSelezionato.nome | uppercase}}:</h2>
+    <div>
+        id: {{eroeSelezionato.id}}
+        <br>
+        nome: {{eroeSelezionato.nome}}
+    </div>
+
+    <h3>-ngModel</h3>
+    <label for="nome">
+        <input type="text" id="nome" [(ngModel)]="eroeSelezionato.nome">
+    </label>
+</div>
+
+
+
+
+
+
