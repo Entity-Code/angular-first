@@ -1,3 +1,12 @@
 <h1>{{title}}</h1>
+<nav>
+    <a routerLink="/eroi">Eroi</a>
+    <br>
+    <a routerLink="/dashboard">Dashboard</a>
+    <br>
+    <br>
+    <button onclick="history.back()">Torna indietro</button>
+</nav>
 <app-notifiche></app-notifiche>
-<app-eroi></app-eroi>
+<router-outlet></router-outlet>
+

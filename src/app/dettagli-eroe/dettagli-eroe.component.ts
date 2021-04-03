@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 //input è un decoratore (funzione)
 import { Eroe } from '../eroe';
+import { EroeService } from '../eroe.service';
 
 @Component({
   selector: 'dettagli-eroe',
@@ -9,11 +11,17 @@ import { Eroe } from '../eroe';
 })
 export class DettagliEroeComponent implements OnInit {
 
-  @Input() eroeDaVisualizzare: Eroe;
+  eroeDaVisualizzare: Eroe;
 
-  constructor() { }
+  constructor(
+    private servizioEroi: EroeService,
+    private route: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
+    //il + converte tutto in un numero
+    const id = +this.route.snapshot.paramMap.get('id');
+    this.servizioEroi.getEroe(id).subscribe(eroe => this.eroeDaVisualizzare = eroe)
   }
 
 }

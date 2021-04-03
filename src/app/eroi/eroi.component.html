@@ -2,13 +2,13 @@
 <h2>I miei eroi</h2>
 <ul class="heroes">
     <li *ngFor="let eroe of eroi" (click)="onSelect(eroe)" [class.selected]="eroe === eroeSelezionato">
-        <span class="badge">{{eroe.id}}</span>
-        {{eroe.nome}}
+        <a routerLink="/dettagli/{{eroe.id}}">
+            <span class="badge">{{eroe.id}}</span>
+            {{eroe.nome}}
+        </a>
     </li>
 </ul>
-<dettagli-eroe 
-    [eroeDaVisualizzare]="eroeSelezionato">
-</dettagli-eroe>
+
 
 
 
