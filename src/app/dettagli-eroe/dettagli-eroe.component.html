@@ -1,0 +1,14 @@
+<div *ngIf="eroeDaVisualizzare">
+    <!-- utilizzo pipe uppercase -->
+    <h2>Dettagli di {{eroeDaVisualizzare.nome | uppercase}}:</h2>
+    <div>
+        id: {{eroeDaVisualizzare.id}}
+        <br>
+        nome: {{eroeDaVisualizzare.nome}}
+    </div>
+
+    <h3>-ngModel</h3>
+    <label for="nome">
+        <input type="text" id="nome" [(ngModel)]="eroeDaVisualizzare.nome">
+    </label>
+</div>

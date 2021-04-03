@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 //interfaccia
 import { Eroe } from '../eroe';
-//lista eroi (finti-eroi.ts)
-import { fintiEroi } from '../finti-eroi';
+//PRENDERE DATI DAL SERVICE:
+//1)Importiamo il file del servizio (.ts)
+import { EroeService } from '../eroe.service';
+//2)Il servizio deve essere 'injectato' all'interno di un qualsiasi componente APPENA VIENE CREATO, passando il service come parametro nel constructor
+import { Subscription } from 'rxjs';
+
+import { NotificheService } from '../notifiche.service';
+
 
 @Component({
   selector: 'app-eroi',
@@ -12,7 +18,10 @@ import { fintiEroi } from '../finti-eroi';
 export class EroiComponent implements OnInit {
   //creazione proprietà del nostro componente
 
-  eroi: Eroe[] = fintiEroi; //finti-eroi.ts
+  eroi: Eroe[]; //eroe.service.ts
+
+  //creiamo
+  subscription: Subscription;
 
   eroeSelezionato: Eroe;
 
@@ -22,13 +31,27 @@ export class EroiComponent implements OnInit {
   // : valoreRitornato (se non ritorna nulla : void)
   onSelect(eroe: Eroe): void { 
     this.eroeSelezionato = eroe;
+    this.notifiche.aggiungiNotifica(`(${eroe.id}) ${eroe.nome} è stato aggiunto!`);
   }
 
-  constructor() { }
+  //3)Dichiariamo un'istanza privata (accessibile solo all'interno di questa classe) del servizio appena creato
+  constructor(
+    private eroeService: EroeService,
+    public notifiche: NotificheService
+  ) { }
 
   //metodo di angular che fa parte dei life cycles (cicli vitali)
+  //la logica che inseriamo qui viene eseguita subito dopo la creazione di un componente
   ngOnInit(): void {
-    //la logica che inseriamo qui viene eseguita subito dopo la creazione di un componente
+    //salviamo tutta questa iscrizione nella proprietà subscription...
+    this.subscription = this.eroeService.getEroi().subscribe(
+      //eguagliamo eroi ricevuto con il nostro sopra tramite una funzione nel subscribe
+      (eroi) => this.eroi = eroi
+    );
+  }
+  //...che riutilizziamo nella ngOnDestroy per cancellare l'iscrizione
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

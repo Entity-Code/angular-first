@@ -1,0 +1,13 @@
+<h2>Notifiche:</h2>
+
+<!-- elimina notifiche -->
+<button 
+    class="clear" 
+    (click)="notifiche.cancellaNotifiche()"> 
+    Cancella Notifiche
+</button>
+
+<!-- notiifche -->
+<div *ngFor="let notifica of notifiche.notifiche">
+    {{notifica}}
+</div>
